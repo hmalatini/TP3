@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date:    15:37:01 10/31/2016 
+// Create Date:    16:29:19 10/31/2016 
 // Design Name: 
-// Module Name:    datapath 
+// Module Name:    Multiplexor_2in_1out 
 // Project Name: 
 // Target Devices: 
 // Tool versions: 
@@ -18,15 +18,12 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module datapath(SeIA, SeIB, WrAcc, Op, Out_Data, In_Data, Addr
+module Multiplexor_2in_1out(
+    input [15:0] DatoA,
+    input [15:0] DatoB,
+    input Sel,
+    output [15:0] Salida
     );
-input [1:0] SeIA;
-input SeIB;
-input WrAcc;
-input Op;
 
-inout [15:0] Out_Data;
-inout reg [15:0] In_Data;
-inout reg [10:0] Addr;
 
 endmodule
