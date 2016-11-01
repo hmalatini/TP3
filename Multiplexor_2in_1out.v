@@ -22,8 +22,15 @@ module Multiplexor_2in_1out(
     input [15:0] DatoA,
     input [15:0] DatoB,
     input Sel,
-    output [15:0] Salida
+    output reg [15:0] Salida
     );
 
+always @(*)
+begin
+	if(Sel == 0)
+		Salida = DatoA;
+	else
+		Salida = DatoB;
+end
 
 endmodule
