@@ -18,15 +18,43 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module datapath(SeIA, SeIB, WrAcc, Op, Out_Data, In_Data, Addr
+module datapath(SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Addr
     );
-input [1:0] SeIA;
-input SeIB;
+//---------------------------Entradas y Salidas---------------------------------//
+input [1:0] SelA;
+input SelB;
 input WrAcc;
 input Op;
+input Clear;
+input clk;
 
-inout [15:0] Out_Data;
-inout reg [15:0] In_Data;
-inout reg [10:0] Addr;
+input [15:0] Out_Data;
+input [10:0] Addr;
+output reg [15:0] In_Data;
+//------------------------------- Conectores ----------------------------------//
+wire salida_signalextension;
+wire salida_ALU;
+wire salida_mux1;
+wire salida_mux2;
+wire salida_acc;
+
+reg operacion;
+//--------------------------------Parametros------------------------------------//
+parameter N=15;
+//-------------------------------Uso de modulos---------------------------------//
+Signal_Extension signalextension (Addr, salida_signalextension);
+Multiplexor_3in_1out mux1 (salida_ALU, salida_signalextension, Out_Data, SelA, salida_mux1);
+Multiplexor_2in_1out mux2 (salida_signalextension, Out_Data, SelB, salida_mux2);
+ACC acumulador (salida_mux1, clk, WrAcc, Clear, salida_acc);
+ALU #(N) alu (salida_acc, salida_mux2, operacion, salida_ALU);
+
+//Para saber opearcion de ALU, si es suma o resta
+always @(Op)
+begin
+	if (Op == 1)
+		operacion <= 'b100000;
+	else
+		operacion <= 'b100010;
+end
 
 endmodule
