@@ -18,8 +18,24 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Program_Counter(
+module Program_Counter #(parameter bits_address=11)(clk, address_bus
     );
+input clk;
 
+output [bits_address-1:0] address_bus;
+
+reg [bits_address-1:0] address_bus_reg = 0;
+wire [bits_address-1:0] address_incremented;
+
+reg [5:0] operando_suma = 'b100000;
+reg [bits_address-1:0] increment = 1;
+
+ALU #(bits_address) alu (address_bus, increment, operando_suma, address_incremented);
+assign address_bus [bits_address-1:0] = address_bus_reg;
+
+	always @(posedge clk)
+	begin	
+		address_bus_reg = address_incremented;
+	end
 
 endmodule

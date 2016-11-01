@@ -18,8 +18,15 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module main_control_block(
+module main_control_block(clk, address_output
     );
-//Agrego un comentario de prueba
+	 
+parameter bits_address = 11;
+	 
+input clk;
+
+output [bits_address-1:0] address_output;
+
+Program_Counter #(bits_address) pc (clk, address_output);
 
 endmodule
