@@ -23,8 +23,17 @@ module Multiplexor_3in_1out(
     input [15:0] DatoB,
     input [15:0] DatoC,
     input [1:0] Sel,
-    output [15:0] Salida
+    output reg [15:0] Salida
     );
 
+always @(*)
+begin
+	if(Sel == 0)
+		Salida = DatoA;
+	else if(Sel == 1)
+		Salida = DatoB;
+	else if(Sel == 2)
+		Salida = DatoC;
+end
 
 endmodule
