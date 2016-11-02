@@ -22,8 +22,6 @@ module Signal_Extension(
     input [10:0] Addr,
     output [15:0] Salida
     );
-
-
 /*
 input [15:0] a;  // 16-bit input
 output [31:0] result; // 32-bit output

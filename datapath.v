@@ -18,8 +18,9 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module datapath(SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Addr
-    );
+module datapath(SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Addr);
+//--------------------------------Parametros------------------------------------//
+parameter N=15;
 //---------------------------Entradas y Salidas---------------------------------//
 input [1:0] SelA;
 input SelB;
@@ -27,20 +28,16 @@ input WrAcc;
 input Op;
 input Clear;
 input clk;
-
-input [15:0] Out_Data;
+input [N:0] Out_Data;
 input [10:0] Addr;
-output reg [15:0] In_Data;
+output reg [15:0] In_Data = 16'b0;
 //------------------------------- Conectores ----------------------------------//
-wire salida_signalextension;
-wire salida_ALU;
-wire salida_mux1;
-wire salida_mux2;
-wire salida_acc;
-
-reg operacion;
-//--------------------------------Parametros------------------------------------//
-parameter N=15;
+wire [N:0] salida_signalextension;
+wire [N:0] salida_ALU;
+wire [N:0] salida_mux1;
+wire [N:0] salida_mux2;
+wire [N:0] salida_acc;
+reg [5:0] operacion;
 //-------------------------------Uso de modulos---------------------------------//
 Signal_Extension signalextension (Addr, salida_signalextension);
 Multiplexor_3in_1out mux1 (salida_ALU, salida_signalextension, Out_Data, SelA, salida_mux1);
