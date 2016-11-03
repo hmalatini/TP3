@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module datapath(SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Addr);
+module Datapath(SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Addr);
 //--------------------------------Parametros------------------------------------//
 parameter N=15;
 //---------------------------Entradas y Salidas---------------------------------//
