@@ -18,10 +18,10 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Program_Counter #(parameter bits_address=11)(clk, address_bus
+module Program_Counter #(parameter bits_address=11)(clk, address_bus, WrPC
     );
 input clk;
-
+input WrPC;
 output [bits_address-1:0] address_bus;
 
 reg [bits_address-1:0] address_bus_reg = 0;
@@ -34,8 +34,9 @@ ALU #(bits_address) alu (address_bus, increment, operando_suma, address_incremen
 assign address_bus [bits_address-1:0] = address_bus_reg;
 
 	always @(posedge clk)
-	begin	
-		address_bus_reg = address_incremented;
+	begin
+		if (WrPC == 1)
+			address_bus_reg = address_incremented;
 	end
 
 endmodule
