@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module main_control_block(clk, OpCode, SelA, SelB, WrAcc, Op, WrRam, RdRam, address_output);
+module Control_Block(clk, OpCode, SelA, SelB, WrAcc, Op, WrRam, RdRam, address_output);
 //----------------------------------- Parametros --------------------------------//
 parameter bits_address = 11;
 //---------------------------------Entradas y Salidas----------------------------//
