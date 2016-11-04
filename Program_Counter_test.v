@@ -26,25 +26,32 @@ module Program_Counter_test;
 
 	// Inputs
 	reg clk;
+	reg WrPC;
+	reg [10:0] address_bus;
 
 	// Outputs
-	wire [10:0] address_bus;
+	wire [10:0] Addr;
 
 	// Instantiate the Unit Under Test (UUT)
 	Program_Counter uut (
 		.clk(clk), 
-		.address_bus(address_bus)
+		.address_bus(address_bus),
+		.WrPC(WrPC),
+		.Addr(Addr)
 	);
 
 	initial begin
 		// Initialize Inputs
 		clk = 0;
+		WrPC = 1;
+		address_bus = 1;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-        
+      address_bus = 2;
 		// Add stimulus here
-
+		#100;
+      address_bus = 3;
 	end
     
 	always 

@@ -55,12 +55,14 @@ begin
 			begin
 				WrPC <= 1; //Incrementamos el PC
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
+				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelA <= 2; //Se selecciona la entrada al mux1 para que vaya al acumulador
 				//ATENCION, LOS INDICES DEL MUX NO COINCIDEN CON EL GRAFICO, CORREGIR EN AMBOS BLOQUES (este y el otro)
 			end
 		'b00011: //LDI
 			begin
 				WrPC <= 1; //Incrementamos el PC
+				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelA <= 1; //Se selecciona la entrada al mux1 para que vaya al acumulador
 			end
 		'b00100: //ADD

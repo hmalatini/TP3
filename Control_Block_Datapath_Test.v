@@ -4,15 +4,15 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   16:55:45 11/03/2016
-// Design Name:   Control_Block
-// Module Name:   C:/Xilinx/tp3_bip/Control_Block_Test.v
+// Create Date:   17:41:05 11/04/2016
+// Design Name:   Main
+// Module Name:   C:/Xilinx/tp3_bip/Control_Block_Datapath_Test.v
 // Project Name:  TP3_BIP
 // Target Device:  
 // Tool versions:  
 // Description: 
 //
-// Verilog Test Fixture created by ISE for module: Control_Block
+// Verilog Test Fixture created by ISE for module: Main
 //
 // Dependencies:
 // 
@@ -22,57 +22,61 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module Control_Block_Test;
+module Control_Block_Datapath_Test;
 
 	// Inputs
 	reg clk;
-	reg [4:0] OpCode;
+	reg [15:0] Data;
+	reg [15:0] Out_Data;
 
 	// Outputs
-	wire [1:0] SelA;
-	wire SelB;
-	wire WrAcc;
-	wire Op;
+	wire [10:0] Addr;
 	wire WrRam;
 	wire RdRam;
-	wire [10:0] Addr;
+	wire [10:0] Addr_DM;
+	wire [15:0] In_Data;
 
 	// Instantiate the Unit Under Test (UUT)
-	Control_Block uut (
+	Main uut (
 		.clk(clk), 
-		.OpCode(OpCode), 
-		.SelA(SelA), 
-		.SelB(SelB), 
-		.WrAcc(WrAcc), 
-		.Op(Op), 
+		.Addr(Addr), 
+		.Data(Data), 
 		.WrRam(WrRam), 
 		.RdRam(RdRam), 
-		.Addr(Addr)
+		.Addr_DM(Addr_DM), 
+		.In_Data(In_Data), 
+		.Out_Data(Out_Data)
 	);
 
 	initial begin
 		// Initialize Inputs
 		clk = 0;
-		OpCode = 0;
+		Data = 0;
+		Out_Data = 'b0000111100001111;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-        
+      Out_Data = 16'b1;
 		// Add stimulus here
-		OpCode = 'b00001;
+		Data = 'b0001111110100000; //HLT
 		#100;
-		OpCode = 'b00010;
+		Data = 'b0001111110100001; //STR
 		#100;
-		OpCode = 'b00011;
+		Data = 'b0001111110100010; //LD
 		#100;
-		OpCode = 'b00100;
+		Data = 'b0001111110100001; //STR
 		#100;
-		OpCode = 'b00101;
+		/*Data = 'b0001111110100011; //LDI
 		#100;
-		OpCode = 'b00111;
+		Data = 'b0001111110100100; //ADD
 		#100;
-		OpCode = 'b00001;
+		Data = 'b0001111110100101; //ADDI
 		#100;
+		Data = 'b0001111110100001; //STR
+		#100;
+		Data = 'b0001111110100110; //SUB
+		#100;
+		Data = 'b0001111110100111; //SUBI*/
 
 	end
 	

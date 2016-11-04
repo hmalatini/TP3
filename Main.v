@@ -40,6 +40,6 @@ wire Op;
 reg Clear = 0;
 //-----------------------------------Bloques-------------------------------------//
 Control_Block CB (clk, Data[4:0], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr);
-Datapath DP (SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Data[15:5]);
+Datapath DP (SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Data[15:5], Addr_DM);
 
 endmodule
