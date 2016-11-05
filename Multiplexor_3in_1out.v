@@ -28,11 +28,11 @@ module Multiplexor_3in_1out(
 
 always @(*)
 begin
-	if(Sel == 0)
+	if(Sel == 2)
 		Salida = DatoA;
 	else if(Sel == 1)
 		Salida = DatoB;
-	else if(Sel == 2)
+	else if(Sel == 0)
 		Salida = DatoC;
 end
 

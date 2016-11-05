@@ -66,8 +66,9 @@ module Control_Block_Datapath_Test;
 		#100;
 		Data = 'b0001111110100001; //STR
 		#100;
-		/*Data = 'b0001111110100011; //LDI
+		Data = 'b0001111110100011; //LDI
 		#100;
+		Out_Data = 'b0000001100000001;
 		Data = 'b0001111110100100; //ADD
 		#100;
 		Data = 'b0001111110100101; //ADDI
@@ -76,15 +77,14 @@ module Control_Block_Datapath_Test;
 		#100;
 		Data = 'b0001111110100110; //SUB
 		#100;
-		Data = 'b0001111110100111; //SUBI*/
-
+		Data = 'b0001111110100111; //SUBI
 	end
 	
 	always 
 		begin //clock de 100 Mhz como el de la placa
 			clk = 1'b0;
-			#(10/2) clk = 1'b1;
-			#(10/2);
+			#(50/2) clk = 1'b1;
+			#(50/2);
 		end
       
 endmodule

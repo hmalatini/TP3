@@ -56,8 +56,7 @@ begin
 				WrPC <= 1; //Incrementamos el PC
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
-				SelA <= 2; //Se selecciona la entrada al mux1 para que vaya al acumulador
-				//ATENCION, LOS INDICES DEL MUX NO COINCIDEN CON EL GRAFICO, CORREGIR EN AMBOS BLOQUES (este y el otro)
+				SelA <= 0; //Se selecciona la entrada al mux1 para que vaya al acumulador
 			end
 		'b00011: //LDI
 			begin
@@ -70,14 +69,14 @@ begin
 				WrPC <= 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
-				SelB <= 0; //Seleccionamos la entrada del multiplexor2
+				SelB <= 1; //Seleccionamos la entrada del multiplexor2
 				Op <= 1; //Hacemos la suma
 			end
 		'b00101: //ADDI
 			begin
 				WrPC <= 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
-				SelB <= 1; //Seleccionamos la entrada del multiplexor2
+				SelB <= 0; //Seleccionamos la entrada del multiplexor2
 				Op <= 1; //Hacemos la suma
 			end
 		'b00110: //SUB
@@ -85,14 +84,14 @@ begin
 				WrPC <= 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
-				SelB <= 0; //Seleccionamos la entrada del multiplexor2
+				SelB <= 1; //Seleccionamos la entrada del multiplexor2
 				Op <= 0; //Hacemos la resta
 			end
 		'b00111: //SUBI
 			begin
 				WrPC <= 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
-				SelB <= 1; //Seleccionamos la entrada del multiplexor2
+				SelB <= 0; //Seleccionamos la entrada del multiplexor2
 				Op <= 0; //Hacemos la resta
 			end
 		default:  WrPC <= 1; //Incrementamos el PC y no hacemos nada
