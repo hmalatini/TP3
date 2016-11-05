@@ -18,28 +18,30 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Main(clk, Addr, Data, WrRam, RdRam, Addr_DM, In_Data, Out_Data);
+module Main(clk);
 //----------------------------------- Parametros --------------------------------//
 //parameter bits_address = 11;
 //---------------------------------Entradas y Salidas----------------------------//
 //Del bloque Control Block
 input clk;
-input [15:0] Data;
-output [10:0] Addr;
-output WrRam;
-output RdRam;
 //Del bloque Datapath
-input [15:0] Out_Data;
-output [15:0] In_Data;
-output [10:0] Addr_DM;
 //----------------------------------Conectores-----------------------------------//
 wire [1:0] SelA;
 wire SelB;
 wire WrAcc;
 wire Op;
 reg Clear = 0;
+wire WrRam;
+wire RdRam;
+wire [15:0] Out_Data;
+wire [15:0] In_Data;
+wire [10:0] Addr_DM;
+wire [15:0] Data;
+wire [10:0] Addr;
 //-----------------------------------Bloques-------------------------------------//
 Control_Block CB (clk, Data[4:0], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr);
 Datapath DP (SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Data[15:5], Addr_DM);
+Data_Memory DM (RdRam, WrRam, Addr_DM, In_Data, Out_Data);
+Program_Memory PM (Addr, Data);
 
 endmodule
