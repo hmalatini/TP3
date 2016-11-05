@@ -27,7 +27,7 @@ module Multiplexor_2in_1out(
 
 always @(*)
 begin
-	if(Sel == 0)
+	if(Sel == 1)
 		Salida = DatoA;
 	else
 		Salida = DatoB;

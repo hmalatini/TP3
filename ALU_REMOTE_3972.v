@@ -1,19 +1,19 @@
 `timescale 1ns / 1ps
 //`define N 7
 
-module ALU #(parameter N=7)(input signed [N:0] BusA,
-   input [N:0] BusB,
+module ALU #(parameter N=7)(input signed [N-1:0] BusA,
+   input [N-1:0] BusB,
    input [5:0] OpCode,
-	output reg[N:0] Result);
+	output reg[N-1:0] Result);
 	
-	wire [N:0] Suma;
-	wire [N:0] Resta;
-	wire [N:0] And;
-	wire [N:0] Xor;
-	wire [N:0] Or;
-	wire [N:0] Nor;
-	wire [N:0] Asr;
-	wire [N:0] Lsr;
+	wire [N-1:0] Suma;
+	wire [N-1:0] Resta;
+	wire [N-1:0] And;
+	wire [N-1:0] Xor;
+	wire [N-1:0] Or;
+	wire [N-1:0] Nor;
+	wire [N-1:0] Asr;
+	wire [N-1:0] Lsr;
 
 	assign Suma = BusA + BusB;
 	assign Resta = BusA - BusB;
@@ -24,7 +24,7 @@ module ALU #(parameter N=7)(input signed [N:0] BusA,
 	assign Asr = BusA >>> 1; //Arithmetic Shift Right
 	assign Lsr = BusA >> 1; //Logical Shift Roght
 
-	always @(*)
+    always @(*)
       case(OpCode)
 			'b100000: Result = Suma;
 			'b100010: Result = Resta;
@@ -34,6 +34,6 @@ module ALU #(parameter N=7)(input signed [N:0] BusA,
 			'b000011: Result = Asr;
 			'b000010: Result = Lsr;
 			'b100111: Result = Nor;
-      default: Result = 0;
-		endcase
+      default: Result = 255;
+      endcase
 endmodule

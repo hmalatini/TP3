@@ -24,16 +24,16 @@ module ALU #(parameter N=7)(input signed [N:0] BusA,
 	assign Asr = BusA >>> 1; //Arithmetic Shift Right
 	assign Lsr = BusA >> 1; //Logical Shift Roght
 
-	always @(*)
+    always @(*)
       case(OpCode)
-			'b100000: Result = Suma;
-			'b100010: Result = Resta;
-			'b100100: Result = And;
-			'b100101: Result = Or;
-			'b100110: Result = Xor;
-			'b000011: Result = Asr;
-			'b000010: Result = Lsr;
-			'b100111: Result = Nor;
+      'b100000: Result = Suma;
+      'b100010: Result = Resta;
+      'b100100: Result = And;
+		'b100101: Result = Or;
+		'b100110: Result = Xor;
+		'b000011: Result = Asr;
+		'b000010: Result = Lsr;
+		'b100111: Result = Nor;
       default: Result = 0;
-		endcase
+      endcase
 endmodule

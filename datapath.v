@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module datapath(SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Addr);
+module Datapath(SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Addr, Addr_DM);
 //--------------------------------Parametros------------------------------------//
 parameter N=15;
 //---------------------------Entradas y Salidas---------------------------------//
@@ -31,6 +31,7 @@ input clk;
 input [N:0] Out_Data;
 input [10:0] Addr;
 output reg [15:0] In_Data = 16'b0;
+output reg [10:0] Addr_DM;
 //------------------------------- Conectores ----------------------------------//
 wire [N:0] salida_signalextension;
 wire [N:0] salida_ALU;
@@ -44,6 +45,7 @@ Multiplexor_3in_1out mux1 (salida_ALU, salida_signalextension, Out_Data, SelA, s
 Multiplexor_2in_1out mux2 (salida_signalextension, Out_Data, SelB, salida_mux2);
 ACC acumulador (salida_mux1, clk, WrAcc, Clear, salida_acc);
 ALU #(N) alu (salida_acc, salida_mux2, operacion, salida_ALU);
+//-----------------------------------Logica-------------------------------------//
 
 //Para saber opearcion de ALU, si es suma o resta
 always @(Op)
@@ -52,6 +54,16 @@ begin
 		operacion <= 'b100000;
 	else
 		operacion <= 'b100010;
+end
+
+always @(Addr)
+begin
+	Addr_DM = Addr;
+end
+
+always @(salida_acc)
+begin
+	assign In_Data = salida_acc;
 end
 
 endmodule
