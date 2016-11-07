@@ -22,18 +22,6 @@ module Signal_Extension #(parameter AB = 11, parameter DB = 16) (
     input [AB-1:0] Addr,
     output [DB-1:0] Salida
     );
-/*
-input [15:0] a;  // 16-bit input
-output [31:0] result; // 32-bit output
-assign result = {{16{a[15]}}, {a[15:0]}};
-
-The curly braces ('{' or '}') mean concatenation, from most significant bit (MSB) on the left down to 
-the least significant bit (LSB) on the right. You are creating a 32-bit bus (result) whose 16 most 
-significant bits consist of 16 copies of bit 15 (the MSB) of the a bus, and whose 16 least significant 
-bits consist of just the a bus (this particular construction is known as sign extension, which is needed 
-e.g. to right-shift a negative number in two's complement form and keep it negative rather than introduce 
-zeros into the MSBits)
-*/
 
 assign Salida = {{DB-AB{Addr[AB-1]}}, Addr};
 
