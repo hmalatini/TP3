@@ -18,13 +18,13 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Program_Memory(
-    input [10:0] Addr,
-    output [15:0] Data
+module Program_Memory #(parameter AB = 11, parameter DB = 16)(
+    input [AB-1:0] Addr,
+    output [DB-1:0] Data
     );
 
 //----------------------------------Conectores-----------------------------------//
-reg [15:0] Mem[0:2047]; //2048 palabras de 16 bits
+reg [DB-1:0] Mem[0:2047]; //2048 palabras de 16 bits
 integer i;
 //------------------------------------Logica-------------------------------------//
 

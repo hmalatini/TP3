@@ -18,11 +18,11 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Multiplexor_2in_1out(
-    input [15:0] DatoA,
-    input [15:0] DatoB,
+module Multiplexor_2in_1out #(parameter DB = 16)(
+    input [DB-1:0] DatoA,
+    input [DB-1:0] DatoB,
     input Sel,
-    output reg [15:0] Salida
+    output reg [DB-1:0] Salida
     );
 
 always @(*)

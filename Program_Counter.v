@@ -18,24 +18,15 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Program_Counter #(parameter bits_address=10)(clk, address_bus, WrPC, Addr);
+module Program_Counter #(parameter AB = 11)(clk, address_bus, WrPC, Addr);
 //----------------------------------Entradas y Salidas-----------------------//
 input clk;
 input WrPC;
-input [10:0] address_bus;
-output reg [10:0] Addr = 0;
-//-------------------------------------Conectores----------------------------//
-/*reg [10:0] address_bus_reg = 0;
-reg [10:0] address_incremented = 0;
-reg [5:0] operando_suma = 'b100000;
-reg [10:0] increment = 1;*/
-//--------------------------------------Bloques------------------------------//
-//ALU #(bits_address) alu (address_bus, increment, operando_suma, address_incremented);
+input [AB-1:0] address_bus;
+output reg [AB-1:0] Addr = 0;
 
 //--------------------------------------Logica-------------------------------//
-//assign address_bus = address_bus_reg;
-
-	always @(posedge clk)
+always @(posedge clk)
 	begin
 		if (WrPC == 1)
 			Addr = address_bus;

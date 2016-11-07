@@ -18,13 +18,11 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Control_Block(clk, OpCode, SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr);
-//----------------------------------- Parametros --------------------------------//
-parameter bits_address = 10;
+module Control_Block #(parameter AB = 11)(clk, OpCode, SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr);
 //---------------------------------Entradas y Salidas----------------------------//
 //Del bloque Program Counter
 input clk;
-output [10:0] Addr;
+output [AB-1:0] Addr;
 //Del bloque Instruction Decoder
 input [4:0] OpCode;
 output [1:0] SelA;
@@ -34,14 +32,14 @@ output Op;
 output WrRam;
 output RdRam;
 //Del bloque ALU
-reg [10:0] increment = 1;
+reg [AB-1:0] increment = 1;
 reg [5:0] operando_suma = 'b100000;
 //----------------------------------Conectores-----------------------------------//
 wire WrPC;
-wire [10:0] address_output;
+wire [AB-1:0] address_output;
 //-----------------------------------Bloques-------------------------------------//
-ALU #(bits_address) alu_pc (Addr, increment, operando_suma, address_output);
-Program_Counter #(bits_address) PC (clk, address_output, WrPC, Addr);
+ALU #(AB) alu_pc (Addr, increment, operando_suma, address_output);
+Program_Counter #(AB) PC (clk, address_output, WrPC, Addr);
 Instruction_Decoder ID (OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam);
 
 endmodule

@@ -18,9 +18,9 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Signal_Extension(
-    input [10:0] Addr,
-    output [15:0] Salida
+module Signal_Extension #(parameter AB = 11, parameter DB = 16) (
+    input [AB-1:0] Addr,
+    output [DB-1:0] Salida
     );
 /*
 input [15:0] a;  // 16-bit input
@@ -35,6 +35,6 @@ e.g. to right-shift a negative number in two's complement form and keep it negat
 zeros into the MSBits)
 */
 
-assign Salida = {{5{Addr[10]}}, Addr};
+assign Salida = {{DB-AB{Addr[AB-1]}}, Addr};
 
 endmodule

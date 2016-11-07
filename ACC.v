@@ -18,13 +18,13 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module ACC(Entrada, clk, WrAcc, Clear, Salida);
+module ACC #(parameter DB = 16)(Entrada, clk, WrAcc, Clear, Salida);
 
-input [15:0] Entrada;
+input [DB-1:0] Entrada;
 input clk;
 input WrAcc;
 input Clear;
-output reg [15:0] Salida = 0;
+output reg [DB-1:0] Salida = 0;
 
 always @(posedge clk)
 begin

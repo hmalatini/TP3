@@ -18,12 +18,12 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Multiplexor_3in_1out(
-    input [15:0] DatoA,
-    input [15:0] DatoB,
-    input [15:0] DatoC,
+module Multiplexor_3in_1out #(parameter DB = 16)(
+    input [DB-1:0] DatoA,
+    input [DB-1:0] DatoB,
+    input [DB-1:0] DatoC,
     input [1:0] Sel,
-    output reg [15:0] Salida
+    output reg [DB-1:0] Salida
     );
 
 always @(*)
