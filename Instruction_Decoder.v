@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Instruction_Decoder(OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam);
+module Instruction_Decoder(OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam, wr_uart);
 //Declaración de Entradas y Salidas
 input [4:0] OpCode;
 
@@ -30,71 +30,88 @@ output reg Op; //1 para Suma, 0 para resta
 output reg WrRam;
 output reg RdRam;
 
+output reg wr_uart;
+
+reg start = 1;
+
 //Logica
 always @(OpCode) //Esto habría que verlo, porque no tenemos un clk, pero siempre que cambie la unica entrada que tenemos, entra acá
 begin
 	//Ponemos todas las flags al estado inicial (Con asignaciones no bloqueantes así queda modificada por la del case)
 	//Solo los enables, porque las otras entradas flags esta bien que quede con el ultimo valor
-	WrPC <= 0;
+//	WrPC <= 0;
 	WrAcc <= 0;
 	WrRam <= 0;
 	RdRam <= 0;
+	wr_uart <= 0;
 	
 	//Analizamos el OpCode para ver como decodificar la instruccion
 	case(OpCode)
 		'b00000: //HLT
 			begin
-				WrPC <= 0; //No hacemos nada, ni permitimos que el PC incremente
+				WrPC = 0; //No hacemos nada, ni permitimos que el PC incremente
+				if(start == 1)
+					begin
+						wr_uart = 1;
+						start = 0; //Para Uart
+					end
 			end
 		'b00001: //STO
 			begin
-				WrPC <= 1; //Incrementamos el PC
+				WrPC = 1; //Incrementamos el PC
 				WrRam <= 1; //Y hablilitamos la escritura en la DM, entonces se guarda la salida del ACC y la ADDR
+				start = 1; //Para Uart
 			end
 		'b00010: //LD
 			begin
-				WrPC <= 1; //Incrementamos el PC
+				WrPC = 1; //Incrementamos el PC
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelA <= 0; //Se selecciona la entrada al mux1 para que vaya al acumulador
+				start = 1; //Para Uart
 			end
 		'b00011: //LDI
 			begin
-				WrPC <= 1; //Incrementamos el PC
+				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelA <= 1; //Se selecciona la entrada al mux1 para que vaya al acumulador
+				start = 1; //Para Uart
 			end
 		'b00100: //ADD
 			begin
-				WrPC <= 1; //Incrementamos el PC
+				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
 				SelB <= 1; //Seleccionamos la entrada del multiplexor2
 				Op <= 1; //Hacemos la suma
+				start = 1; //Para Uart
 			end
 		'b00101: //ADDI
 			begin
-				WrPC <= 1; //Incrementamos el PC
+				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelB <= 0; //Seleccionamos la entrada del multiplexor2
 				Op <= 1; //Hacemos la suma
+				start = 1; //Para Uart
 			end
 		'b00110: //SUB
 			begin
-				WrPC <= 1; //Incrementamos el PC
+				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
 				SelB <= 1; //Seleccionamos la entrada del multiplexor2
 				Op <= 0; //Hacemos la resta
+				start = 1; //Para Uart
 			end
 		'b00111: //SUBI
 			begin
-				WrPC <= 1; //Incrementamos el PC
+				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelB <= 0; //Seleccionamos la entrada del multiplexor2
 				Op <= 0; //Hacemos la resta
+				start = 1; //Para Uart
 			end
-		default:  WrPC <= 1; //Incrementamos el PC y no hacemos nada
+		default:  WrPC = 0; //Incrementamos el PC y no hacemos nada
 	endcase
 end
 

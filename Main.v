@@ -49,7 +49,7 @@ wire [AB-1:0] Addr;
 wire wr_uart;
 wire start_bip;
 //-----------------------------------Bloques-------------------------------------//
-Control_Block #(AB) CB (clk, Data[15:11], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, start_bip);
+Control_Block #(AB) CB (clk, Data[15:11], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, start_bip, wr_uart);
 Datapath #(AB, DB) DP (SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Data[10:0], Addr_DM);
 Data_Memory #(AB, DB) DM (RdRam, WrRam, Addr_DM, In_Data, clk, Out_Data);
 Program_Memory #(AB, DB) PM (Addr, clk, Data);

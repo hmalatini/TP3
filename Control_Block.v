@@ -18,11 +18,12 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Control_Block #(parameter AB = 11)(clk, OpCode, SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, start_bip);
+module Control_Block #(parameter AB = 11)(clk, OpCode, SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, start_bip, wr_uart);
 //---------------------------------Entradas y Salidas----------------------------//
 //Del bloque Program Counter
 input clk;
 input start_bip;
+output wr_uart;
 output [AB-1:0] Addr;
 //Del bloque Instruction Decoder
 input [4:0] OpCode;
@@ -41,6 +42,6 @@ wire [AB-1:0] address_output;
 //-----------------------------------Bloques-------------------------------------//
 ALU #(AB) alu_pc (Addr, increment, operando_suma, address_output);
 Program_Counter #(AB) PC (clk, address_output, WrPC, Addr, start_bip);
-Instruction_Decoder ID (OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam);
+Instruction_Decoder ID (OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam, wr_uart);
 
 endmodule

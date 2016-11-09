@@ -23,7 +23,7 @@ module UART(rx, clk, reset, tx, rx_empty, tx_full, acc_uart, wr_uart, start_bip
 //--------------------------Parametros para UART----------------------	
 parameter BaudRate = 19200;
 parameter clk_Mhz = 100;
-parameter DBIT = 16;
+parameter DBIT = 8;
 parameter SB_TICK = 16;
 //-------------------------------------------------------------------
 
