@@ -18,23 +18,23 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module UART(rx, clk, reset, tx, rx_empty, tx_full
+module UART(rx, clk, reset, tx, rx_empty, tx_full, acc_uart, wr_uart, start_bip
     );
 //--------------------------Parametros para UART----------------------	
 parameter BaudRate = 19200;
 parameter clk_Mhz = 100;
-parameter DBIT = 8;
+parameter DBIT = 16;
 parameter SB_TICK = 16;
-//--------------------------Parametros para ALU----------------------
-parameter N = 7; //Variable que indica el tamaño de los registros de los Operandos
 //-------------------------------------------------------------------
 
 wire [DBIT-1:0] w_data;
 input rx;
 input clk;
+input [DBIT-1:0] acc_uart;
 wire rd_uart;
-wire wr_uart;
-input reset; 
+input wr_uart;
+input reset;
+output start_bip;
 
 wire [DBIT-1:0] r_data;
 output tx;
@@ -52,12 +52,9 @@ wire empty_txstart;
 wire tick_stick;
 
 Baud_Rate_Generator #(clk_Mhz, BaudRate) baudrategenerator (clk, tick_stick);
-Receiver #(DBIT, SB_TICK) receptor (tick_stick, rx, dout_wdata, rxdonetick_wr, reset, state, clk);
+Receiver #(DBIT, SB_TICK) receptor (tick_stick, rx, start_bip, rxdonetick_wr, reset, state, clk);
 Transmitter #(DBIT, SB_TICK) transmisor (tick_stick, tx, rdata_din, txdonetick_rd, reset, ~empty_txstart, clk);
-Fifo #(DBIT) fifo_receptor (dout_wdata, rd_uart, rxdonetick_wr, r_data, rx_full, rx_empty, clk);
-Fifo #(DBIT) fifo_transmisor (w_data, txdonetick_rd, wr_uart, rdata_din, tx_full, empty_txstart, clk);
-
-//-----------------------------------BLOQUES DE LA ALU------------------------------------------
-EntradaALU #(N) entrada_alu (r_data, rd_uart, rx_full, clk, w_data, wr_uart);
+//Fifo #(DBIT) fifo_receptor (dout_wdata, rd_uart, rxdonetick_wr, r_data, rx_full, rx_empty, clk);
+Fifo #(DBIT) fifo_transmisor (acc_uart, txdonetick_rd, wr_uart, rdata_din, tx_full, empty_txstart, clk);
 
 endmodule

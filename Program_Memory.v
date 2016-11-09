@@ -20,7 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 module Program_Memory #(parameter AB = 11, parameter DB = 16)(
     input [AB-1:0] Addr,
-    output [DB-1:0] Data
+	 input clk,
+    output reg [DB-1:0] Data
     );
 
 //----------------------------------Conectores-----------------------------------//
@@ -31,21 +32,24 @@ integer i;
 //Para simulacion
 initial
 	begin
-		for (i = 0; i < 2048; i = i + 1) 
+		/*for (i = 0; i < 2048; i = i + 1) 
 			begin
 				Mem[i] = i;
-			end
+			end*/
 		//Cargamos datos de prueba;
-		Mem[0]= 'b0110000000000001;
-		Mem[1]= 'b0110001100000001;
-		Mem[2]= 'b0110110000000010;
-		Mem[3]= 'b0110110001000011;
-		Mem[4]= 'b0110110001000100;
-		Mem[5]= 'b0110001100000101;
-		Mem[6]= 'b0110110000000110;
-		Mem[7]= 'b0110110001000111;
+		Mem[0]= 'b0000001100000000;
+		Mem[1]= 'b0000101100011000;
+		Mem[2]= 'b0001001101100000;
+		Mem[3]= 'b0001101101100010;
+		Mem[4]= 'b0010001101100010;
+		Mem[5]= 'b0010101100011000;
+		Mem[6]= 'b0011001101100000;
+		Mem[7]= 'b0011101101100010;
+		Mem[8]= 'b0000001100000000;
 	end
 
-assign Data = Mem[Addr];
-
+always @(posedge clk)
+begin
+	Data = Mem[Addr];
+end
 endmodule

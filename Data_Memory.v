@@ -18,13 +18,14 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Data_Memory #(parameter AB = 11, parameter DB = 16) (RdRam, WrRam, Addr, In_Data, Out_Data);
+module Data_Memory #(parameter AB = 11, parameter DB = 16) (RdRam, WrRam, Addr, In_Data, clk, Out_Data);
 //----------------------------------- Parametros --------------------------------//
 //---------------------------------Entradas y Salidas----------------------------//
 input RdRam;
 input WrRam;
 input [AB-1:0] Addr;
 input [DB-1:0] In_Data;
+input clk;
 output reg [DB-1:0] Out_Data;
 //----------------------------------Conectores-----------------------------------//
 reg [DB-1:0] Mem [0:2047]; //2048 palabras de 16 bits
@@ -35,13 +36,13 @@ integer i;
 initial
 	begin
 		Out_Data <= 0;
-		for (i = 0; i < 2048; i = i + 1) 
+/*		for (i = 0; i < 2048; i = i + 1) 
 			begin
 				Mem[i] = i;
-			end
+			end*/
 	end
 
-always@(RdRam, WrRam, Mem, In_Data, Addr)
+always@(posedge clk)
 	begin
 		if(WrRam == 1)
 			Mem[Addr] <= In_Data;
