@@ -27,7 +27,7 @@ input [AB-1:0] Addr;
 input [DB-1:0] In_Data;
 output reg [DB-1:0] Out_Data;
 //----------------------------------Conectores-----------------------------------//
-reg [DB-1:0] Mem[0:2047]; //2048 palabras de 16 bits
+reg [DB-1:0] Mem [0:2047]; //2048 palabras de 16 bits
 integer i;
 //------------------------------------Logica-------------------------------------//
 
