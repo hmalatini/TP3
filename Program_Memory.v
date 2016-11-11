@@ -21,11 +21,11 @@
 module Program_Memory #(parameter AB = 11, parameter DB = 16)(
     input [AB-1:0] Addr,
 	 input clk,
-    output reg [DB-1:0] Data
+    output [DB-1:0] Data
     );
 
 //----------------------------------Conectores-----------------------------------//
-reg [DB-1:0] Mem[0:2047]; //2048 palabras de 16 bits
+reg [DB-1:0] Mem[0:100]; //2048 palabras de 16 bits
 integer i;
 //------------------------------------Logica-------------------------------------//
 
@@ -46,10 +46,11 @@ initial
 		Mem[6]= 'b0011000000000110;
 		Mem[7]= 'b0011100000000111;
 		Mem[8]= 'b0000001100000000;
+		Mem[9]= 'b0000100000000001;
 	end
 
-always @(posedge clk)
-begin
-	Data = Mem[Addr];
-end
+//always @(posedge clk)
+//begin
+	assign Data [DB-1:0] = Mem[Addr];
+//end
 endmodule

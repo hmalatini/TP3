@@ -18,15 +18,18 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Fifo #(parameter DBIT=8)(w_data, rd, wr, r_data, full, empty, clk
+module Fifo #(parameter DBIT=8)(w_data, rd, wr, r_data, empty, clk/*, led*/
     );
 input [DBIT-1:0] w_data;
 input rd, clk;
 input wr;
 
 output reg [DBIT-1:0] r_data = 'b00111100;
-output reg full = 0;
+reg full = 0;
 output reg empty = 1;
+
+//PARA TESTING EN PLACA
+//output reg led = 0;
 
 reg [DBIT-1:0] dato [0:2];
 integer cantidad_datos = 0;
@@ -37,6 +40,7 @@ begin
 	begin
 		if(!full)
 		begin
+			//led = 1;
 			cantidad_datos = cantidad_datos + 1;
 			dato [cantidad_datos - 1]= w_data;
 		end

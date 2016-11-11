@@ -28,7 +28,7 @@ input [DB-1:0] In_Data;
 input clk;
 output reg [DB-1:0] Out_Data;
 //----------------------------------Conectores-----------------------------------//
-reg [DB-1:0] Mem [0:2047]; //2048 palabras de 16 bits
+reg [DB-1:0] Mem [0:100]; //2048 palabras de 16 bits
 integer i;
 //------------------------------------Logica-------------------------------------//
 
@@ -36,18 +36,27 @@ integer i;
 initial
 	begin
 		Out_Data <= 0;
+		Mem[4] = 'b0011111111000000;
+		Mem[0] = 'b0000000000000000;
+		Mem[1] = 'b0000000000000000;
+		Mem[2] = 'b0000000000000000;
+		Mem[3] = 'b0000000000000000;
+		Mem[5] = 'b0000000000000000;
+		Mem[6] = 'b0000000000000000;
+		Mem[7] = 'b0000000000000000;
+		Mem[8] = 'b0000000000000000;
 /*		for (i = 0; i < 2048; i = i + 1) 
 			begin
 				Mem[i] = i;
 			end*/
 	end
 
-always@(posedge clk)
+always@(WrRam, RdRam)
 	begin
 		if(WrRam == 1)
-			Mem[Addr] <= In_Data;
+			Mem[Addr] = In_Data;
 		else if(RdRam == 1)
-			Out_Data <= Mem[Addr];
+			Out_Data = Mem[Addr];
 	end
 
 endmodule

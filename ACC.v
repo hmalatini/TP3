@@ -34,7 +34,7 @@ begin
 		end
 	if (WrAcc == 1)
 		begin
-			Salida <= Salida + Entrada;
+			Salida <= Entrada;
 		end
 end
 

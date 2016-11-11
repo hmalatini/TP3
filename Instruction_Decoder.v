@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool versions: 
-// Description: 
+// Description: 	
 //
 // Dependencies: 
 //
@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Instruction_Decoder(OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam, wr_uart);
+module Instruction_Decoder(OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam, wr_uart, led3, led4);
 //Declaración de Entradas y Salidas
 input [4:0] OpCode;
 
@@ -34,6 +34,10 @@ output reg wr_uart;
 
 reg start = 1;
 
+//PARA TESTING EN PLACA
+output reg led3 = 0;
+output reg led4 = 0;
+
 //Logica
 always @(OpCode) //Esto habría que verlo, porque no tenemos un clk, pero siempre que cambie la unica entrada que tenemos, entra acá
 begin
@@ -43,13 +47,15 @@ begin
 	WrAcc <= 0;
 	WrRam <= 0;
 	RdRam <= 0;
-	wr_uart <= 0;
+	wr_uart = 0;
 	
 	//Analizamos el OpCode para ver como decodificar la instruccion
 	case(OpCode)
 		'b00000: //HLT
 			begin
 				WrPC = 0; //No hacemos nada, ni permitimos que el PC incremente
+				led3 = 0; //TESTING
+				led4 = 1; //TESTING
 				if(start == 1)
 					begin
 						wr_uart = 1;
@@ -61,6 +67,8 @@ begin
 				WrPC = 1; //Incrementamos el PC
 				WrRam <= 1; //Y hablilitamos la escritura en la DM, entonces se guarda la salida del ACC y la ADDR
 				start = 1; //Para Uart
+				led3 = 0; //TESTING
+				led4 = 0; //TESTING
 			end
 		'b00010: //LD
 			begin
@@ -69,6 +77,8 @@ begin
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelA <= 0; //Se selecciona la entrada al mux1 para que vaya al acumulador
 				start = 1; //Para Uart
+				led3 = 0; //TESTING
+				led4 = 0; //TESTING
 			end
 		'b00011: //LDI
 			begin
@@ -76,42 +86,62 @@ begin
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelA <= 1; //Se selecciona la entrada al mux1 para que vaya al acumulador
 				start = 1; //Para Uart
+				led3 = 0; //TESTING
+				led4 = 0; //TESTING
 			end
 		'b00100: //ADD
 			begin
 				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
-				SelB <= 1; //Seleccionamos la entrada del multiplexor2
+				SelB <= 0; //Seleccionamos la entrada del multiplexor2
+				SelA <= 2; //Se selecciona la entrada al mux1 para que vaya al acumulador
 				Op <= 1; //Hacemos la suma
 				start = 1; //Para Uart
+				led3 = 0; //TESTING
+				led4 = 0; //TESTING
 			end
 		'b00101: //ADDI
 			begin
 				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
-				SelB <= 0; //Seleccionamos la entrada del multiplexor2
+				SelB <= 1; //Seleccionamos la entrada del multiplexor2
+				SelA <= 2;
 				Op <= 1; //Hacemos la suma
 				start = 1; //Para Uart
+				led3 = 0; //TESTING
+				led4 = 0; //TESTING
 			end
 		'b00110: //SUB
 			begin
 				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
-				SelB <= 1; //Seleccionamos la entrada del multiplexor2
+				SelB <= 0; //Seleccionamos la entrada del multiplexor2
+				SelA <= 2;
 				Op <= 0; //Hacemos la resta
 				start = 1; //Para Uart
+				led3 = 0; //TESTING
+				led4 = 0; //TESTING
 			end
 		'b00111: //SUBI
 			begin
 				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
-				SelB <= 0; //Seleccionamos la entrada del multiplexor2
+				SelB <= 1; //Seleccionamos la entrada del multiplexor2
+				SelA <= 2;
 				Op <= 0; //Hacemos la resta
 				start = 1; //Para Uart
+				led3 = 0; //TESTING
+				led4 = 0; //TESTING
 			end
-		default:  WrPC = 0; //Incrementamos el PC y no hacemos nada
+		default:
+			begin
+				WrPC = 0; //Incrementamos el PC y no hacemos nada
+				led3 = 1;
+				led4 = 0; //TESTING
+			end
+
 	endcase
 end
 

@@ -31,17 +31,15 @@ module Main_Todo_2;
 
 	// Outputs
 	wire tx;
-	wire rx_empty;
-	wire tx_full;
-
+	wire led;
+	
 	// Instantiate the Unit Under Test (UUT)
 	Main uut (
 		.clk(clk), 
 		.rx(rx), 
 		.reset(reset), 
-		.tx(tx), 
-		.rx_empty(rx_empty), 
-		.tx_full(tx_full)
+		.tx(tx),
+		.led(led)
 	);
 
 	initial begin
@@ -52,9 +50,11 @@ module Main_Todo_2;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-        
+      
 		// Add stimulus here
 		rx = 1;
+		#9999999;
+		
 		#52083.34;
 		rx = 0;//start bit
 		#52083.34;

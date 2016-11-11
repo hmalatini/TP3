@@ -4,3 +4,7 @@
 NET "clk" LOC = V10;
 NET "rx" LOC = N17;
 NET "tx" LOC = N18;
+NET "led" LOC = T11;
+NET "led2" LOC = R11;
+NET "led3" LOC = V16;
+NET "led4" LOC = U16;
