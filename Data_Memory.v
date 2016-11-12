@@ -45,10 +45,6 @@ initial
 		Mem[6] = 'b0000000000000000;
 		Mem[7] = 'b0000000000000000;
 		Mem[8] = 'b0000000000000000;
-/*		for (i = 0; i < 2048; i = i + 1) 
-			begin
-				Mem[i] = i;
-			end*/
 	end
 
 always@(WrRam, RdRam)

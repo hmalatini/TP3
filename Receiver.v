@@ -51,6 +51,9 @@ module Receiver #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, rx, dout, rx_d
 // Asignación del siguiente estado
    always @(posedge clk)
 	begin
+		if(dout != 0)//Agregado para que la salida de lo recibido dure solo un clock
+			dout = 0;
+	
 		rx_done_tick = 0;
 		if (s_tick == 1)
 		begin

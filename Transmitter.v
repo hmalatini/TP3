@@ -104,7 +104,6 @@ module Transmitter #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, tx, din, tx
 			stop:
 				if (s_reg ==(SB_TICK-1) && tx == 1)
 					begin
-						//tx_done_tick = 1;
 						nextState = idle;
 					end
 				else if (s_reg == (SB_TICK-1)) 

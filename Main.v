@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Main(clk, rx, reset, tx, led, led2, led3, led4);
+module Main(clk, rx, reset, tx);
 //----------------------------------- Parametros --------------------------------//
 parameter AB = 11; //Address Bus
 parameter DB = 16; //Data Bus
@@ -47,18 +47,12 @@ wire [AB-1:0] Addr;
 wire wr_uart;
 wire start_bip;
 
-//PARA TESTING EN PLACA
-output led;
-output led2;
-output led3;
-output led4;
-
 //-----------------------------------Bloques-------------------------------------//
-Control_Block #(AB) CB (clk, Data[15:11], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, start_bip, wr_uart, led2, led3, led4);
+Control_Block #(AB) CB (clk, Data[15:11], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, start_bip, wr_uart);
 Datapath #(AB, DB) DP (SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Data[10:0], Addr_DM);
 Data_Memory #(AB, DB) DM (RdRam, WrRam, Addr_DM, In_Data, clk, Out_Data);
 Program_Memory #(AB, DB) PM (Addr, clk, Data);
 //Para debuggear
-UART Uart (rx, clk, reset, tx, In_Data, wr_uart, start_bip, led);
+UART Uart (rx, clk, reset, tx, In_Data, wr_uart, start_bip);
 
 endmodule

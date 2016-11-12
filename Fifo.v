@@ -28,9 +28,6 @@ output reg [DBIT-1:0] r_data = 'b00111100;
 reg full = 0;
 output reg empty = 1;
 
-//PARA TESTING EN PLACA
-//output reg led = 0;
-
 reg [DBIT-1:0] dato [0:2];
 integer cantidad_datos = 0;
 
@@ -40,7 +37,6 @@ begin
 	begin
 		if(!full)
 		begin
-			//led = 1;
 			cantidad_datos = cantidad_datos + 1;
 			dato [cantidad_datos - 1]= w_data;
 		end
