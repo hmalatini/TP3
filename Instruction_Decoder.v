@@ -32,7 +32,7 @@ output reg RdRam;
 
 output reg wr_uart;
 
-reg start = 1;
+//reg start = 1;
 
 //PARA TESTING EN PLACA
 output reg led3 = 0;
@@ -56,18 +56,19 @@ begin
 				WrPC = 0; //No hacemos nada, ni permitimos que el PC incremente
 				led3 = 0; //TESTING
 				led4 = 1; //TESTING
-				if(start == 1)
-					begin
+				//if(start == 1)
+					//begin
 						wr_uart = 1;
-						start = 0; //Para Uart
-					end
+						led3 = 1; //Para Testing
+						//start = 0; //Para Uart
+					//end
 			end
 		'b00001: //STO
 			begin
 				WrPC = 1; //Incrementamos el PC
 				WrRam <= 1; //Y hablilitamos la escritura en la DM, entonces se guarda la salida del ACC y la ADDR
-				start = 1; //Para Uart
-				led3 = 0; //TESTING
+				//start = 1; //Para Uart
+				//led3 = 0; //TESTING
 				led4 = 0; //TESTING
 			end
 		'b00010: //LD
@@ -76,8 +77,8 @@ begin
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelA <= 0; //Se selecciona la entrada al mux1 para que vaya al acumulador
-				start = 1; //Para Uart
-				led3 = 0; //TESTING
+				//start = 1; //Para Uart
+				//led3 = 0; //TESTING
 				led4 = 0; //TESTING
 			end
 		'b00011: //LDI
@@ -85,8 +86,8 @@ begin
 				WrPC = 1; //Incrementamos el PC
 				WrAcc <= 1; //Procesamos lo que hay en el acumulador
 				SelA <= 1; //Se selecciona la entrada al mux1 para que vaya al acumulador
-				start = 1; //Para Uart
-				led3 = 0; //TESTING
+				//start = 1; //Para Uart
+				//led3 = 0; //TESTING
 				led4 = 0; //TESTING
 			end
 		'b00100: //ADD
@@ -97,8 +98,8 @@ begin
 				SelB <= 0; //Seleccionamos la entrada del multiplexor2
 				SelA <= 2; //Se selecciona la entrada al mux1 para que vaya al acumulador
 				Op <= 1; //Hacemos la suma
-				start = 1; //Para Uart
-				led3 = 0; //TESTING
+				//start = 1; //Para Uart
+				//led3 = 0; //TESTING
 				led4 = 0; //TESTING
 			end
 		'b00101: //ADDI
@@ -108,8 +109,8 @@ begin
 				SelB <= 1; //Seleccionamos la entrada del multiplexor2
 				SelA <= 2;
 				Op <= 1; //Hacemos la suma
-				start = 1; //Para Uart
-				led3 = 0; //TESTING
+				//start = 1; //Para Uart
+				//led3 = 0; //TESTING
 				led4 = 0; //TESTING
 			end
 		'b00110: //SUB
@@ -120,8 +121,8 @@ begin
 				SelB <= 0; //Seleccionamos la entrada del multiplexor2
 				SelA <= 2;
 				Op <= 0; //Hacemos la resta
-				start = 1; //Para Uart
-				led3 = 0; //TESTING
+				//start = 1; //Para Uart
+				//led3 = 0; //TESTING
 				led4 = 0; //TESTING
 			end
 		'b00111: //SUBI
@@ -131,14 +132,14 @@ begin
 				SelB <= 1; //Seleccionamos la entrada del multiplexor2
 				SelA <= 2;
 				Op <= 0; //Hacemos la resta
-				start = 1; //Para Uart
-				led3 = 0; //TESTING
+				//start = 1; //Para Uart
+				//led3 = 0; //TESTING
 				led4 = 0; //TESTING
 			end
 		default:
 			begin
 				WrPC = 0; //Incrementamos el PC y no hacemos nada
-				led3 = 1;
+				//led3 = 0;
 				led4 = 0; //TESTING
 			end
 

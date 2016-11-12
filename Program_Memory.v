@@ -38,6 +38,7 @@ initial
 			end*/
 		//Cargamos datos de prueba;
 		Mem[0]= 'b0000001100000000;
+		//Mem[0]= 'b1111101100000000; //PARA TESTING
 		Mem[1]= 'b0000100000000001;
 		Mem[2]= 'b0001000000000010;
 		Mem[3]= 'b0001100000000011;
