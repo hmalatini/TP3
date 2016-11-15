@@ -21,7 +21,7 @@
 module Program_Memory #(parameter AB = 11, parameter DB = 16)(
     input [AB-1:0] Addr,
 	 input clk,
-    output [DB-1:0] Data
+    output reg [DB-1:0] Data
     );
 
 //----------------------------------Conectores-----------------------------------//
@@ -51,8 +51,8 @@ initial
 		Mem[15]= 'b0000100000000001;//Instruccion de más despues del halt que no deberia hacer nada
 	end
 
-//always @(posedge clk)
-//begin
-	assign Data [DB-1:0] = Mem[Addr];
-//end
+always @(posedge clk)
+begin
+	/*assign*/ Data [DB-1:0] = Mem[Addr];
+end
 endmodule

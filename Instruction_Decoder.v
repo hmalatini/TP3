@@ -37,7 +37,7 @@ always @(OpCode) //Esto habría que verlo, porque no tenemos un clk, pero siempre
 begin
 	//Ponemos todas las flags al estado inicial (Con asignaciones no bloqueantes así queda modificada por la del case)
 	//Solo los enables, porque las otras entradas flags esta bien que quede con el ultimo valor
-	WrAcc <= 0;
+	WrAcc = 0;
 	WrRam <= 0;
 	RdRam <= 0;
 	wr_uart = 0;
@@ -58,19 +58,19 @@ begin
 			begin
 				WrPC = 1; //Incrementamos el PC
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
-				WrAcc <= 1; //Procesamos lo que hay en el acumulador
+				WrAcc = 1; //Procesamos lo que hay en el acumulador
 				SelA <= 0; //Se selecciona la entrada al mux1 para que vaya al acumulador
 			end
 		'b00011: //LDI
 			begin
 				WrPC = 1; //Incrementamos el PC
-				WrAcc <= 1; //Procesamos lo que hay en el acumulador
+				WrAcc = 1; //Procesamos lo que hay en el acumulador
 				SelA <= 1; //Se selecciona la entrada al mux1 para que vaya al acumulador
 			end
 		'b00100: //ADD
 			begin
 				WrPC = 1; //Incrementamos el PC
-				WrAcc <= 1; //Procesamos lo que hay en el acumulador
+				WrAcc = 1; //Procesamos lo que hay en el acumulador
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
 				SelB <= 0; //Seleccionamos la entrada del multiplexor2
 				SelA <= 2; //Se selecciona la entrada al mux1 para que vaya al acumulador
@@ -79,7 +79,7 @@ begin
 		'b00101: //ADDI
 			begin
 				WrPC = 1; //Incrementamos el PC
-				WrAcc <= 1; //Procesamos lo que hay en el acumulador
+				WrAcc = 1; //Procesamos lo que hay en el acumulador
 				SelB <= 1; //Seleccionamos la entrada del multiplexor2
 				SelA <= 2;
 				Op <= 1; //Hacemos la suma
@@ -87,7 +87,7 @@ begin
 		'b00110: //SUB
 			begin
 				WrPC = 1; //Incrementamos el PC
-				WrAcc <= 1; //Procesamos lo que hay en el acumulador
+				WrAcc = 1; //Procesamos lo que hay en el acumulador
 				RdRam <= 1; //Habilitamos lectura, para poder sacar el operando de DM (Out_Data)
 				SelB <= 0; //Seleccionamos la entrada del multiplexor2
 				SelA <= 2;
@@ -96,7 +96,7 @@ begin
 		'b00111: //SUBI
 			begin
 				WrPC = 1; //Incrementamos el PC
-				WrAcc <= 1; //Procesamos lo que hay en el acumulador
+				WrAcc = 1; //Procesamos lo que hay en el acumulador
 				SelB <= 1; //Seleccionamos la entrada del multiplexor2
 				SelA <= 2;
 				Op <= 0; //Hacemos la resta

@@ -47,7 +47,7 @@ initial
 		Mem[8] = 'b0000000000000000;
 	end
 
-always@(WrRam, RdRam)
+always@(negedge clk)
 	begin
 		if(WrRam == 1)
 			Mem[Addr] = In_Data;

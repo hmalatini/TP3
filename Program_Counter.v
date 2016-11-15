@@ -27,17 +27,22 @@ input start_bip;
 output reg [AB-1:0] Addr = 0;
 //-----------------------------------Conectores------------------------------//
 reg start = 1;
+reg dos_clock = 1;
 
 //--------------------------------------Logica-------------------------------//
 always @(posedge clk) //El Program Counter coloca en Addr la direccion que se leerá en el próximo clock.
 	begin					
 		if (WrPC == 1)
-			Addr = address_bus;
-		else				//Entonces debemos anular los ultimos dos incrementos si la ultima instrucción ha sido un HLT(WrPC = 0)
-			if (address_bus >= 2)
-				begin
-					Addr = address_bus - 1; //Listo!. Con esto se soluciona lo de leer una instruccion de mas.
-				end
+			begin
+				if(dos_clock==1)
+					begin
+						Addr = address_bus;
+						dos_clock = 0;
+					end
+				else
+					dos_clock = 1;
+			end
+			
 		if (start_bip == 1 /*& start == 1*/)
 			begin
 				Addr = Addr + 1;
