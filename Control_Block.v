@@ -18,12 +18,10 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Control_Block #(parameter AB = 11)(clk, OpCode, SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, start_bip, wr_uart);
+module Control_Block #(parameter AB = 11)(clk, OpCode, SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, wr_uart);
 //---------------------------------Entradas y Salidas----------------------------//
 //Del bloque Program Counter
 input clk;
-input start_bip;
-output wr_uart;
 output [AB-1:0] Addr;
 //Del bloque Instruction Decoder
 input [4:0] OpCode;
@@ -40,9 +38,15 @@ reg [5:0] operando_suma = 'b100000;
 wire WrPC;
 wire [AB-1:0] address_output;
 
+//Para debuggear con uart
+output wr_uart;
+
+//TESTING
+
+
 //-----------------------------------Bloques-------------------------------------//
 ALU #(AB) alu_pc (Addr, increment, operando_suma, address_output);
-Program_Counter #(AB) PC (clk, address_output, WrPC, Addr, start_bip);
+Program_Counter #(AB) PC (clk, address_output, WrPC, Addr);
 Instruction_Decoder ID (OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam, wr_uart);
 
 endmodule

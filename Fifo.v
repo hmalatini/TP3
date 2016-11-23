@@ -18,18 +18,22 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Fifo #(parameter DBIT=8)(w_data, rd, wr, r_data, empty, clk/*, led*/
+module Fifo #(parameter DBIT=8)(data_high, data_low, rd, wr, r_data, empty, clk
     );
-input [DBIT-1:0] w_data;
+//input [DBIT-1:0] w_data;
+input [DBIT-1:0] data_high;
+input [DBIT-1:0] data_low;
 input rd, clk;
 input wr;
 
-output reg [DBIT-1:0] r_data = 'b00111100;
+output reg [DBIT-1:0] r_data = 'b00000000;
 reg full = 0;
 output reg empty = 1;
 
-reg [DBIT-1:0] dato [0:2];
+reg [DBIT-1:0] dato [0:1];
 integer cantidad_datos = 0;
+
+//TESTING
 
 always @(posedge clk)
 begin
@@ -37,8 +41,10 @@ begin
 	begin
 		if(!full)
 		begin
-			cantidad_datos = cantidad_datos + 1;
-			dato [cantidad_datos - 1]= w_data;
+			dato [0] = data_low;
+			dato [1] = data_high;
+			cantidad_datos = cantidad_datos + 2;
+			//dato [cantidad_datos - 1]= w_data;
 		end
 	end
 	
@@ -50,19 +56,20 @@ begin
 			cantidad_datos = cantidad_datos - 1;
 		end
 	end
-end
-
-always @(cantidad_datos)
-begin
+	
 	if(cantidad_datos == 0)
-		empty = 1;
+		begin
+			empty = 1;
+		end	
+	else if(cantidad_datos == 2)
+		begin
+			full = 1;
+			empty = 0; //Bandera para comenzar a transmitir una vez que se hayan cargado los dos valores
+		end
 	else
-		empty = 0;
-
-	if(cantidad_datos == 3)
-		full = 1;
-	else
-		full = 0;
+		begin
+			full = 0;
+		end
 end
 
 endmodule

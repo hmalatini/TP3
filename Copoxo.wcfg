@@ -3,24 +3,93 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="D:/TP3_BIP/Main_Todo_2_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Xilinx/tp3_bip/Main_Todo_2_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="Main_Todo_2" />
             <top_module name="glbl" />
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="3" />
-   <wvobject fp_name="/Main_Todo_2/rx" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">rx</obj_property>
-      <obj_property name="ObjectShortName">rx</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Main_Todo_2/uut/Uart/baudrategenerator/tick" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">tick</obj_property>
-      <obj_property name="ObjectShortName">tick</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Main_Todo_2/uut/Uart/transmisor/tx" type="logic" db_ref_id="1">
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/Main_Todo_2/tx" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">tx</obj_property>
       <obj_property name="ObjectShortName">tx</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ff0000</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/CB/ID/OpCode" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">OpCode[4:0]</obj_property>
+      <obj_property name="ObjectShortName">OpCode[4:0]</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#0000ff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/CB/ID/wr_uart" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_uart</obj_property>
+      <obj_property name="ObjectShortName">wr_uart</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ffff00</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/fifo_transmisor/wr" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr</obj_property>
+      <obj_property name="ObjectShortName">wr</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ffff00</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/salida_acc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">salida_acc[15:0]</obj_property>
+      <obj_property name="ObjectShortName">salida_acc[15:0]</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#00ffff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/fifo_transmisor/data_high" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_high[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_high[7:0]</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#00ffff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/fifo_transmisor/data_low" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_low[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_low[7:0]</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#00ffff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/fifo_transmisor/dato" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dato[0:1,7:0]</obj_property>
+      <obj_property name="ObjectShortName">dato[0:1,7:0]</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#00ffff</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/fifo_transmisor/cantidad_datos" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cantidad_datos[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cantidad_datos[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/fifo_transmisor/empty" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">empty</obj_property>
+      <obj_property name="ObjectShortName">empty</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/transmisor/tx_start" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">tx_start</obj_property>
+      <obj_property name="ObjectShortName">tx_start</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/transmisor/tx_done_tick" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">tx_done_tick</obj_property>
+      <obj_property name="ObjectShortName">tx_done_tick</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/fifo_transmisor/rd" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rd</obj_property>
+      <obj_property name="ObjectShortName">rd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/fifo_transmisor/r_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">r_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Main_Todo_2/uut/Uart/transmisor/din" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">din[7:0]</obj_property>
+      <obj_property name="ObjectShortName">din[7:0]</obj_property>
    </wvobject>
 </wave_config>

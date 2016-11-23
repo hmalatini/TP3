@@ -4,10 +4,10 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   18:48:48 11/09/2016
+// Create Date:   10:14:32 11/23/2016
 // Design Name:   Main
-// Module Name:   C:/Xilinx/tp3_bip/Main_Todo_2.v
-// Project Name:  TP3_BIP
+// Module Name:   D:/TP3_BIP_MOD/Main_Todo_Test_3.v
+// Project Name:  TP3_BIP_MOD
 // Target Device:  
 // Tool versions:  
 // Description: 
@@ -22,22 +22,36 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module Main_Todo_2;
+module Main_Todo_Test_3;
 
 	// Inputs
 	reg clk;
 	reg rx;
 	reg reset;
+	reg enable;
 
 	// Outputs
 	wire tx;
-	
+	wire led;
+	wire led2;
+	wire led3;
+	wire led4;
+	wire led5;
+	wire led6;
+
 	// Instantiate the Unit Under Test (UUT)
 	Main uut (
 		.clk(clk), 
 		.rx(rx), 
 		.reset(reset), 
-		.tx(tx)
+		.tx(tx), 
+		.led(led), 
+		.led2(led2), 
+		.led3(led3), 
+		.led4(led4), 
+		.led5(led5), 
+		.enable(enable), 
+		.led6(led6)
 	);
 
 	initial begin
@@ -51,31 +65,7 @@ module Main_Todo_2;
       
 		// Add stimulus here
 		rx = 1;
-		/*#999999;
-	
-		#52083.34;
-		rx = 0;//start bit
-		#52083.34;
-		rx = 1;
-		#52083.34;
-		rx = 0;
-		#52083.34;
-		rx = 0;
-		#52083.34;
-		rx = 0;
-		#52083.34;
-		rx = 0;
-		#52083.34;
-		rx = 0;
-		#52083.34;
-		rx = 0;
-		#52083.34;
-		rx = 0;
-		#52083.34;
-		rx = 1;//stop bit
-		#52083.34;
-		
-		#800000;
+		#999999;
 		
 		#52083.34;
 		rx = 0;//start bit
@@ -265,13 +255,37 @@ module Main_Todo_2;
 		rx = 0;
 		#52083.34;
 		rx = 1;//stop bit
-		#52083.34;*/
+		#52083.34;
+		
+		#800000;
+		
+		#52083.34;
+		rx = 0;//start bit
+		#52083.34;
+		rx = 1;
+		#52083.34;
+		rx = 0;
+		#52083.34;
+		rx = 0;
+		#52083.34;
+		rx = 0;
+		#52083.34;
+		rx = 0;
+		#52083.34;
+		rx = 0;
+		#52083.34;
+		rx = 0;
+		#52083.34;
+		rx = 0;
+		#52083.34;
+		rx = 1;//stop bit
+		#52083.34;
 	end
 	
 	always 
 		begin 
-			clk = 1'b0;
-			#(10/2) clk = 1'b1;
+			clk = 1'b1;
+			#(10/2) clk = 1'b0;
 			#(10/2);
 		end
       

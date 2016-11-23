@@ -24,11 +24,9 @@ input [DB-1:0] Entrada;
 input clk;
 input WrAcc;
 input Clear;
-output reg [DB-1:0] Salida = 0;
+output reg [DB-1:0] Salida = 6;
 
-reg dos_clock = 1;
-
-always @(posedge clk)
+always @(negedge clk)
 begin
 	if(Clear == 1)
 		begin
@@ -36,13 +34,7 @@ begin
 		end
 	if (WrAcc == 1)
 		begin
-			if (dos_clock == 1)
-				begin
-					Salida <= Entrada;
-					dos_clock = 0;
-				end
-			else
-				dos_clock = 1;
+			Salida <= Entrada;
 		end
 end
 

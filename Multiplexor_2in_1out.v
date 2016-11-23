@@ -18,19 +18,26 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Multiplexor_2in_1out #(parameter DB = 16)(
-    input [DB-1:0] DatoA,
-    input [DB-1:0] DatoB,
-    input Sel,
-    output reg [DB-1:0] Salida
+module Multiplexor_2in_1out #(parameter DB = 16)(DatoA, DatoB, Sel, Salida
     );
+
+    input [DB-1:0] DatoA;
+    input [DB-1:0] DatoB;
+    input Sel;
+    output reg [DB-1:0] Salida = 0;
+
+//PARA TESTING
 
 always @(*)
 begin
 	if(Sel == 1)
-		Salida = DatoA;
+		begin
+			Salida = DatoA;
+		end
 	else
-		Salida = DatoB;
+		begin
+			Salida = DatoB;
+		end
 end
 
 endmodule

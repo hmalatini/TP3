@@ -29,7 +29,7 @@ input Clear;
 input clk;
 input [DB-1:0] Out_Data;
 input [AB-1:0] Addr;
-output reg [DB-1:0] In_Data = 16'b0;
+output reg [DB-1:0] In_Data = 3;
 output reg [AB-1:0] Addr_DM;
 //------------------------------- Conectores ----------------------------------//
 wire [DB-1:0] salida_signalextension;
@@ -38,6 +38,9 @@ wire [DB-1:0] salida_mux1;
 wire [DB-1:0] salida_mux2;
 wire [DB-1:0] salida_acc;
 reg [5:0] operacion;
+
+//PARA TESTING
+
 //-------------------------------Uso de modulos---------------------------------//
 Signal_Extension #(AB, DB) signalextension (Addr, salida_signalextension);
 Multiplexor_3in_1out #(DB) mux1 (salida_ALU, salida_signalextension, Out_Data, SelA, salida_mux1);

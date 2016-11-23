@@ -18,22 +18,29 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Multiplexor_3in_1out #(parameter DB = 16)(
-    input [DB-1:0] DatoA,
-    input [DB-1:0] DatoB,
-    input [DB-1:0] DatoC,
-    input [1:0] Sel,
-    output reg [DB-1:0] Salida
+module Multiplexor_3in_1out #(parameter DB = 16)(DatoA, DatoB, DatoC, Sel, Salida
     );
+
+    input [DB-1:0] DatoA;
+    input [DB-1:0] DatoB;
+    input [DB-1:0] DatoC;
+    input [1:0] Sel;
+    output reg [DB-1:0] Salida = 7;
 
 always @(*)
 begin
 	if(Sel == 2)
-		Salida = DatoA;
+		begin
+			Salida = DatoA;
+		end
 	else if(Sel == 1)
-		Salida = DatoB;
+		begin
+			Salida = DatoB;
+		end
 	else if(Sel == 0)
-		Salida = DatoC;
+		begin
+			Salida = DatoC;
+		end
 end
 
 endmodule

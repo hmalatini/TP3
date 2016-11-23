@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module UART(rx, clk, reset, tx, acc_uart, wr_uart, start_bip
+module UART(rx, clk, reset, tx, salida_acc, wr_uart
     );
 //--------------------------Parametros para UART----------------------	
 parameter BaudRate = 19200;
@@ -30,11 +30,9 @@ parameter SB_TICK = 16;
 wire [DBIT-1:0] w_data;
 input rx;
 input clk;
-input [15:0] acc_uart; //Ver de parametrizarlo mas adelante
 wire rd_uart;
 input wr_uart;
-input reset;
-output start_bip;
+input reset; 
 
 wire [DBIT-1:0] r_data;
 output tx;
@@ -49,48 +47,38 @@ wire empty_txstart;
 
 wire tick_stick;
 
-reg wr_uart_special = 0; //registro que lo va a manejar éste modulo en el alway para poder apilar/tranimitr primero 8 bits y despues otros 8 bits
-reg [DBIT-1:0] acc_uart_special = 0;
+input [15:0] salida_acc;
 
-reg [1:0] send_word = 0; //registro de bandera que se usará para saber que bloque de los dos de 8 bits se va a enviar.
+reg primer_halt = 1;
+reg escribir = 0;
+//PARA TESTING
 
+
+//----------------------------------------Modulos--------------------------------------------//
 Baud_Rate_Generator #(clk_Mhz, BaudRate) baudrategenerator (clk, tick_stick);
-Receiver #(DBIT, SB_TICK) receptor (tick_stick, rx, start_bip, rxdonetick_wr, reset, state, clk);
-Transmitter #(DBIT, SB_TICK) transmisor (tick_stick, tx, rdata_din, txdonetick_rd, reset, ~empty_txstart, clk);
-Fifo #(DBIT) fifo_transmisor (acc_uart_special, txdonetick_rd, wr_uart_special, rdata_din, empty_txstart, clk);
+//Receiver #(DBIT, SB_TICK) receptor (tick_stick, rx, rxdonetick_wr,  clk);
+Transmitter #(DBIT, SB_TICK) transmisor (tick_stick, tx, rdata_din, txdonetick_rd, ~empty_txstart, clk);
+Fifo #(DBIT) fifo_transmisor (salida_acc[15:8], salida_acc[7:0], txdonetick_rd, escribir, rdata_din, empty_txstart, clk);
 
-
-always @(posedge clk)
-	begin
-		if (wr_uart == 1)
-			begin
-				case (send_word)
-					'b00:
-						begin
-							acc_uart_special = acc_uart [7:0];
-							wr_uart_special = 1;
-							send_word = 'b01;
-						end
-					'b01:
-						begin
-							wr_uart_special = 0;
-							send_word = 'b10;
-						end
-					'b10:
-						begin
-							acc_uart_special = acc_uart [15:8];
-							wr_uart_special = 1;
-							send_word = 'b11;
-						end
-					'b11:
-						begin
-							wr_uart_special = 0; //Se quedara en este estado hasta que wr_uart se haga 0
-						end
-					default:  wr_uart_special = 0;
-				endcase
-			end
-		else
-			send_word = 'b00;
-	end
+//----------------------------------------Logica--------------------------------------------//
+always@(posedge clk)
+begin
+	if(wr_uart == 1)
+		begin
+			if(primer_halt == 1)
+				begin
+					escribir = 1;
+					primer_halt = 0;
+				end
+			else
+				begin
+					escribir = 0;
+				end
+		end
+	else
+		begin
+			primer_halt = 1;
+		end
+end
 
 endmodule

@@ -45,14 +45,24 @@ wire [DB-1:0] Data;
 wire [AB-1:0] Addr;
 //Para debugger con UART
 wire wr_uart;
-wire start_bip;
+
+//PARA TESTING
+/*output led;
+output led2;
+output led3;
+output led4;
+output led5;
+output led6;
+input enable;
+output led7;
+output led8;*/
 
 //-----------------------------------Bloques-------------------------------------//
-Control_Block #(AB) CB (clk, Data[15:11], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, start_bip, wr_uart);
+Control_Block #(AB) CB (clk, Data[15:11], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, wr_uart);
 Datapath #(AB, DB) DP (SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Data[10:0], Addr_DM);
 Data_Memory #(AB, DB) DM (RdRam, WrRam, Addr_DM, In_Data, clk, Out_Data);
 Program_Memory #(AB, DB) PM (Addr, clk, Data);
 //Para debuggear
-UART Uart (rx, clk, reset, tx, In_Data, wr_uart, start_bip);
+UART Uart (rx, clk, reset, tx, In_Data, wr_uart);
 
 endmodule

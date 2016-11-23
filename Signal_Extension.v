@@ -18,11 +18,12 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Signal_Extension #(parameter AB = 11, parameter DB = 16) (
-    input [AB-1:0] Addr,
-    output [DB-1:0] Salida
+module Signal_Extension #(parameter AB = 11, parameter DB = 16) (Addr, Salida
     );
 
-assign Salida = {{DB-AB{Addr[AB-1]}}, Addr};
+    input [AB-1:0] Addr;
+    output [DB-1:0] Salida;
 
+	assign Salida = {{DB-AB{Addr[AB-1]}}, Addr};
+	
 endmodule

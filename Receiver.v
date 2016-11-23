@@ -18,10 +18,10 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Receiver #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, rx, dout, rx_done_tick, reset, state, clk
+module Receiver #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, rx, dout, rx_done_tick, clk
     );
 
-	input s_tick, rx, reset, clk;
+	input s_tick, rx, clk;
 	output reg rx_done_tick;
 	output reg [(DBIT-1):0] dout = 'b00000000;
 	
@@ -36,7 +36,7 @@ module Receiver #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, rx, dout, rx_d
 	reg [7:0] b_next = 0; 
 
 //POR CUESTIONES DE TETING LO PONEMOS COMO OUTPUT. (SACAR "output" y el parametro en el modulo cuando ya no es lo use)	
-	output reg [3:0] state;
+	reg [3:0] state;
 	reg [3:0] nextState; //Tendremos 4 estados y utilizaremos 4 bits para usar la lógica "One Hot - One Cold".
 	
 			//Declaramos los 4 estados que tendremos
@@ -53,21 +53,15 @@ module Receiver #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, rx, dout, rx_d
 	begin
 		if(dout != 0)//Agregado para que la salida de lo recibido dure solo un clock
 			dout = 0;
-	
 		rx_done_tick = 0;
 		if (s_tick == 1)
 		begin
 	//-------------------------------------------------------------
 	//Asignación síncrona: Actualización del estado y las variables		
-			if(reset == 1) 
-				state = idle;
-			else 
-				begin
-					n_reg = n_next;
-					s_reg = s_next;
-					b_reg = b_next;
-					state = nextState;
-				end
+				n_reg = n_next;
+				s_reg = s_next;
+				b_reg = b_next;
+				state = nextState;
 	//-------------------------------------------------------------			
 			case(state)
 			idle:  //

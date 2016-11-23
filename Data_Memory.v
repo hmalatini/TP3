@@ -26,7 +26,7 @@ input WrRam;
 input [AB-1:0] Addr;
 input [DB-1:0] In_Data;
 input clk;
-output reg [DB-1:0] Out_Data;
+output reg [DB-1:0] Out_Data = 0;
 //----------------------------------Conectores-----------------------------------//
 reg [DB-1:0] Mem [0:100]; //2048 palabras de 16 bits
 integer i;
@@ -47,7 +47,7 @@ initial
 		Mem[8] = 'b0000000000000000;
 	end
 
-always@(negedge clk)
+always@(posedge clk)
 	begin
 		if(WrRam == 1)
 			Mem[Addr] = In_Data;
