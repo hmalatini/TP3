@@ -31,7 +31,7 @@ always @(*)
 begin
 	if(Sel == 2)
 		begin
-			Salida = DatoA;
+			Salida = DatoA/*8*/;
 		end
 	else if(Sel == 1)
 		begin
@@ -39,7 +39,7 @@ begin
 		end
 	else if(Sel == 0)
 		begin
-			Salida = DatoC;
+			Salida = DatoC/*9*/;
 		end
 end
 

@@ -39,8 +39,6 @@ wire [DB-1:0] salida_mux2;
 wire [DB-1:0] salida_acc;
 reg [5:0] operacion;
 
-//PARA TESTING
-
 //-------------------------------Uso de modulos---------------------------------//
 Signal_Extension #(AB, DB) signalextension (Addr, salida_signalextension);
 Multiplexor_3in_1out #(DB) mux1 (salida_ALU, salida_signalextension, Out_Data, SelA, salida_mux1);

@@ -18,10 +18,10 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Receiver #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, rx, dout, rx_done_tick, clk
+module Receiver #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, rx, dout, rx_done_tick, reset, clk
     );
 
-	input s_tick, rx, clk;
+	input s_tick, rx, reset, clk;
 	output reg rx_done_tick;
 	output reg [(DBIT-1):0] dout = 'b00000000;
 	
@@ -51,17 +51,23 @@ module Receiver #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, rx, dout, rx_d
 // Asignación del siguiente estado
    always @(posedge clk)
 	begin
-		if(dout != 0)//Agregado para que la salida de lo recibido dure solo un clock
-			dout = 0;
+/*		if(dout != 0)//Agregado para que la salida de lo recibido dure solo un clock
+			dout = 0;*/
+	
 		rx_done_tick = 0;
 		if (s_tick == 1)
 		begin
 	//-------------------------------------------------------------
 	//Asignación síncrona: Actualización del estado y las variables		
-				n_reg = n_next;
-				s_reg = s_next;
-				b_reg = b_next;
-				state = nextState;
+			if(reset == 1) 
+				state = idle;
+			else 
+				begin
+					n_reg = n_next;
+					s_reg = s_next;
+					b_reg = b_next;
+					state = nextState;
+				end
 	//-------------------------------------------------------------			
 			case(state)
 			idle:  //

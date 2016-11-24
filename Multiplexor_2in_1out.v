@@ -26,8 +26,6 @@ module Multiplexor_2in_1out #(parameter DB = 16)(DatoA, DatoB, Sel, Salida
     input Sel;
     output reg [DB-1:0] Salida = 0;
 
-//PARA TESTING
-
 always @(*)
 begin
 	if(Sel == 1)

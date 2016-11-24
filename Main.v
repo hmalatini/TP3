@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Main(clk, rx, reset, tx);
+module Main(clk, rx, reset, tx, enable);
 //----------------------------------- Parametros --------------------------------//
 parameter AB = 11; //Address Bus
 parameter DB = 16; //Data Bus
@@ -44,25 +44,17 @@ wire [AB-1:0] Addr_DM;
 wire [DB-1:0] Data;
 wire [AB-1:0] Addr;
 //Para debugger con UART
-wire wr_uart;
+wire WrPC_Input;
+wire WrPC_Output;
 
-//PARA TESTING
-/*output led;
-output led2;
-output led3;
-output led4;
-output led5;
-output led6;
 input enable;
-output led7;
-output led8;*/
 
 //-----------------------------------Bloques-------------------------------------//
-Control_Block #(AB) CB (clk, Data[15:11], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, wr_uart);
+Control_Block #(AB) CB (clk, Data[15:11], SelA, SelB, WrAcc, Op, WrRam, RdRam, Addr, WrPC_Input, WrPC_Output);
 Datapath #(AB, DB) DP (SelA, SelB, WrAcc, Op, Clear, clk, Out_Data, In_Data, Data[10:0], Addr_DM);
 Data_Memory #(AB, DB) DM (RdRam, WrRam, Addr_DM, In_Data, clk, Out_Data);
 Program_Memory #(AB, DB) PM (Addr, clk, Data);
 //Para debuggear
-UART Uart (rx, clk, reset, tx, In_Data, wr_uart);
+UART Uart (rx, clk, reset, tx, In_Data, WrPC_Input, WrPC_Output, enable);
 
 endmodule

@@ -1,10 +1,14 @@
 `timescale 1ns / 1ps
 //`define N 7
 
-module ALU #(parameter N=7)(input signed [N-1:0] BusA,
-   input [N-1:0] BusB,
-   input [5:0] OpCode,
-	output reg[N-1:0] Result);
+module ALU #(parameter N=7)(BusA, BusB, OpCode, Result);
+	
+	
+	input signed [N-1:0] BusA;
+   input [N-1:0] BusB;
+   input [5:0] OpCode;
+	output reg[N-1:0] Result = 0;
+	
 	
 	wire [N-1:0] Suma;
 	wire [N-1:0] Resta;

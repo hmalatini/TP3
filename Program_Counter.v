@@ -25,17 +25,19 @@ input WrPC;
 input [AB-1:0] address_bus;
 output reg [AB-1:0] Addr = 0;
 
-//TESTING
-
 //-----------------------------------Conectores------------------------------//
 
 //--------------------------------------Logica-------------------------------//
 always @(posedge clk) //El Program Counter coloca en Addr la direccion que se leerá en el próximo clock.
 	begin					
 		if (WrPC == 1)
-			Addr <= address_bus;
-		else
-			Addr <= Addr;
+			begin
+				Addr = address_bus;
+			end
+/*		if (start_bip == 1)
+			begin
+				Addr = Addr + 1;
+			end*/
 	end
 
 endmodule

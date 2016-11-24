@@ -18,9 +18,9 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Transmitter #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, tx, din, tx_done_tick, tx_start, clk
+module Transmitter #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, tx, din, tx_done_tick, reset, tx_start, clk
     );
-	input s_tick, tx_start, clk;
+	input s_tick, reset, tx_start, clk;
 	input [DBIT-1:0] din;
 	output reg tx_done_tick = 0;
 	output reg tx = 1;
@@ -50,11 +50,16 @@ module Transmitter #(parameter DBIT=8, parameter SB_TICK=16)(s_tick, tx, din, tx
 		begin
 	//------------------------------------------------------------
 	// Asignación síncrona: Actualización del estado y las variables	
-			n_reg = n_next;
-			s_reg = s_next;
-			b_reg = b_next;
-			tx_done_tick = 0;
-			state = nextState;
+			if(reset == 1) 
+				state = idle;
+			else 
+				begin
+					n_reg = n_next;
+					s_reg = s_next;
+					b_reg = b_next;
+					tx_done_tick = 0;
+					state = nextState;
+				end
 	//------------------------------------------------------------
 	// Asignación síncrona: Actualización del siguiente estado	
 			case(state)

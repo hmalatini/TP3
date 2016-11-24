@@ -18,11 +18,11 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module Instruction_Decoder(OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam, wr_uart);
+module Instruction_Decoder(OpCode, WrPC, SelA, SelB, WrAcc, Op, WrRam, RdRam);
 //Declaración de Entradas y Salidas
 input [4:0] OpCode;
 
-output reg WrPC = 0;
+output reg WrPC = 1; //ARRANCA EN UNO PARA QUE NO IMPRIMA POR UART NI BIEN ARRANCA LA PLACA
 output reg [1:0] SelA;
 output reg SelB;
 output reg WrAcc = 0;
@@ -30,11 +30,8 @@ output reg Op; //1 para Suma, 0 para resta
 output reg WrRam = 0;
 output reg RdRam = 0;
 
-//Para debuggear con UART
-output reg wr_uart = 0;
-
 //Logica
-always @(OpCode) //Esto habría que verlo, porque no tenemos un clk, pero siempre que cambie la unica entrada que tenemos, entra acá
+always @(*) //Esto habría que verlo, porque no tenemos un clk, pero siempre que cambie la unica entrada que tenemos, entra acá
 begin
 	//Analizamos el OpCode para ver como decodificar la instruccion
 	case(OpCode)
@@ -44,7 +41,6 @@ begin
 				WrAcc = 0;
 				WrRam = 0;
 				RdRam = 0;
-				wr_uart = 1;
 			end
 		'b00001: //STO
 			begin
@@ -52,7 +48,6 @@ begin
 				WrRam = 1; //Y hablilitamos la escritura en la DM, entonces se guarda la salida del ACC y la ADDR
 				RdRam = 0;
 				WrAcc = 0;
-				wr_uart = 0;
 			end
 		'b00010: //LD
 			begin
@@ -61,7 +56,6 @@ begin
 				WrAcc = 1; //Procesamos lo que hay en el acumulador
 				WrRam = 0;
 				SelA = 0; //Se selecciona la entrada al mux1 para que vaya al acumulador
-				wr_uart = 0;
 			end
 		'b00011: //LDI
 			begin
@@ -70,7 +64,6 @@ begin
 				RdRam = 0;
 				WrRam = 0;
 				SelA = 1; //Se selecciona la entrada al mux1 para que vaya al acumulador
-				wr_uart = 0;
 			end
 		'b00100: //ADD
 			begin
@@ -81,7 +74,6 @@ begin
 				SelB = 0; //Seleccionamos la entrada del multiplexor2
 				SelA = 2; //Se selecciona la entrada al mux1 para que vaya al acumulador
 				Op = 1; //Hacemos la suma
-				wr_uart = 0;
 			end
 		'b00101: //ADDI
 			begin
@@ -92,7 +84,6 @@ begin
 				SelB = 1; //Seleccionamos la entrada del multiplexor2
 				SelA = 2;
 				Op = 1; //Hacemos la suma
-				wr_uart = 0;
 			end
 		'b00110: //SUB
 			begin
@@ -103,7 +94,6 @@ begin
 				SelB = 0; //Seleccionamos la entrada del multiplexor2
 				SelA = 2;
 				Op = 0; //Hacemos la resta
-				wr_uart = 0;
 			end
 		'b00111: //SUBI
 			begin
@@ -114,7 +104,6 @@ begin
 				SelB = 1; //Seleccionamos la entrada del multiplexor2
 				SelA = 2;
 				Op = 0; //Hacemos la resta
-				wr_uart = 0;
 			end
 		default:
 			begin
@@ -122,7 +111,6 @@ begin
 				WrAcc = 0;
 				WrRam = 0;
 				RdRam = 0;
-				wr_uart = 0;
 			end
 
 	endcase
